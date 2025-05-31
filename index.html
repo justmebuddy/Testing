@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Firebase Auth</title>
+</head>
+<body>
+  <h2>Register</h2>
+  <input id="regEmail" type="email" placeholder="Email"><br>
+  <input id="regPassword" type="password" placeholder="Password"><br>
+  <button onclick="register()">Register</button>
+
+  <h2>Login</h2>
+  <input id="logEmail" type="email" placeholder="Email"><br>
+  <input id="logPassword" type="password" placeholder="Password"><br>
+  <button onclick="login()">Login</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhkNdmScAvA03x37_4GfD3nPgFdhSpdlw",
+      authDomain: "ecommerce-auth-dc760.firebaseapp.com",
+      projectId: "ecommerce-auth-dc760",
+      storageBucket: "ecommerce-auth-dc760.firebasestorage.app",
+      messagingSenderId: "65994466308",
+      appId: "1:65994466308:web:3a2f0ed9727a6e11244151",
+      measurementId: "G-R3GG0CCR8L"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.register = function() {
+      const email = document.getElementById("regEmail").value;
+      const password = document.getElementById("regPassword").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          alert("✅ Registered: " + userCredential.user.email);
+        })
+        .catch(error => {
+          alert("❌ Error: " + error.message);
+        });
+    }
+
+    window.login = function() {
+      const email = document.getElementById("logEmail").value;
+      const password = document.getElementById("logPassword").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          alert("✅ Logged in: " + userCredential.user.email);
+        })
+        .catch(error => {
+          alert("❌ Error: " + error.message);
+        });
+    }
+  </script>
+</body>
+</html>
