@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Firestore Data Seeder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white p-6">
+
+  <h1 class="text-3xl font-bold mb-6">🔥 Cyber Academy Database Seeder</h1>
+
+  <button onclick="seedDatabase()"
+    class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded text-lg">
+    Seed Database
+  </button>
+
+  <p id="status" class="mt-6 text-sm text-gray-300"></p>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+/* ---------------- FIREBASE ---------------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyBsnsYzyQF-ufzTYmWpPUAPSKwhQrDW-0U",
+  authDomain: "ideas-hub-250c8.firebaseapp.com",
+  projectId: "ideas-hub-250c8",
+  storageBucket: "ideas-hub-250c8.firebasestorage.app",
+  messagingSenderId: "878672371620",
+  appId: "1:878672371620:web:d7c771a2f75f4f573d6b31"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* ---------------- DATA ---------------- */
+
+const tools = [
+  {
+    name: "Keylogger",
+    description: "Study of keystroke logging techniques for detection, analysis, and defensive cybersecurity research.",
+    imageUrl: "https://source.unsplash.com/600x400/?cybersecurity,keyboard"
+  },
+  {
+    name: "Spyware",
+    description: "Understanding spyware behavior, persistence mechanisms, and how modern systems detect and prevent it.",
+    imageUrl: "https://source.unsplash.com/600x400/?hacking,security"
+  },
+  {
+    name: "Malware",
+    description: "Educational analysis of malicious software including behavior, signatures, and mitigation strategies.",
+    imageUrl: "https://source.unsplash.com/600x400/?malware,code"
+  },
+  {
+    name: "RAT Version 12",
+    description: "Remote Access Tool study for learning attack surfaces, command channels, and defensive response.",
+    imageUrl: "https://source.unsplash.com/600x400/?network,hacker"
+  }
+];
+
+const courses = [
+  {
+    title: "Ethical Hacking Essentials",
+    description: "Foundational ethical hacking techniques with strict legal and professional guidelines.",
+    imageUrl: "https://source.unsplash.com/600x400/?ethical-hacking"
+  },
+  {
+    title: "Web Penetration Testing",
+    description: "Practical web application security testing including vulnerabilities and protections.",
+    imageUrl: "https://source.unsplash.com/600x400/?web-security"
+  },
+  {
+    title: "Malware Analysis",
+    description: "Static and dynamic malware analysis for defensive cybersecurity research.",
+    imageUrl: "https://source.unsplash.com/600x400/?malware,analysis"
+  },
+  {
+    title: "SQL Injection (SQLi)",
+    description: "Understanding SQL injection attacks and how to prevent them in real applications.",
+    imageUrl: "https://source.unsplash.com/600x400/?database,security"
+  },
+  {
+    title: "Scanning & Reconnaissance",
+    description: "Network and application reconnaissance techniques used in security assessments.",
+    imageUrl: "https://source.unsplash.com/600x400/?network,scan"
+  },
+  {
+    title: "Shell Scripting",
+    description: "Automation using shell scripts for system administration and security tasks.",
+    imageUrl: "https://source.unsplash.com/600x400/?linux,terminal"
+  },
+  {
+    title: "Network Fundamentals",
+    description: "Core networking concepts including TCP/IP, DNS, routing, and ports.",
+    imageUrl: "https://source.unsplash.com/600x400/?networking"
+  },
+  {
+    title: "Machine Learning",
+    description: "Introduction to machine learning concepts used in cybersecurity analytics.",
+    imageUrl: "https://source.unsplash.com/600x400/?machine-learning"
+  }
+];
+
+const books = [
+  {
+    title: "Kali Linux Cheatsheet",
+    description: "Quick reference guide for Kali Linux commands and security tools.",
+    imageUrl: "https://source.unsplash.com/600x400/?linux,hacking"
+  },
+  {
+    title: "The Hacker’s Playbook",
+    description: "A practical guide to penetration testing methodologies and mindset.",
+    imageUrl: "https://source.unsplash.com/600x400/?hacker,book"
+  },
+  {
+    title: "Bug Hunting Checklist",
+    description: "Step-by-step checklist for finding security bugs and vulnerabilities.",
+    imageUrl: "https://source.unsplash.com/600x400/?bug,bounty"
+  },
+  {
+    title: "Hacking: The Art of Information Gathering",
+    description: "Techniques and tools used in information gathering and reconnaissance.",
+    imageUrl: "https://source.unsplash.com/600x400/?information,security"
+  }
+];
+
+const challenges = [
+  {
+    title: "CTF",
+    description: "Capture The Flag challenges designed to sharpen real-world cybersecurity skills.",
+    imageUrl: "https://source.unsplash.com/600x400/?ctf,cyber"
+  },
+  {
+    title: "Daily Hunt",
+    description: "Daily security challenges to practice vulnerability analysis and problem solving.",
+    imageUrl: "https://source.unsplash.com/600x400/?challenge,code"
+  }
+];
+
+/* ---------------- SEED FUNCTION ---------------- */
+
+window.seedDatabase = async () => {
+  const status = document.getElementById("status");
+  status.innerText = "⏳ Seeding database...";
+
+  try {
+    for (const t of tools) {
+      await addDoc(collection(db, "tools"), {
+        ...t,
+        createdAt: serverTimestamp()
+      });
+    }
+
+    for (const c of courses) {
+      await addDoc(collection(db, "courses"), {
+        ...c,
+        status: "Coming Soon",
+        createdAt: serverTimestamp()
+      });
+    }
+
+    for (const b of books) {
+      await addDoc(collection(db, "books"), {
+        ...b,
+        price: 49,
+        pdfAvailable: true,
+        createdAt: serverTimestamp()
+      });
+    }
+
+    for (const ch of challenges) {
+      await addDoc(collection(db, "challenges"), {
+        ...ch,
+        status: "Updated very soon",
+        createdAt: serverTimestamp()
+      });
+    }
+
+    status.innerText = "✅ Database seeded successfully!";
+  } catch (err) {
+    console.error(err);
+    status.innerText = "❌ Error seeding database. Check console.";
+  }
+};
+</script>
+
+</body>
+</html>
