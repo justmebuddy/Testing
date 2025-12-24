@@ -1,59 +1,155 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Simple Firebase Auth</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>M. SHARMA | Cyber Academy</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+<style>
+body { background:#07090d; color:#e5e7eb; font-family:'Space Grotesk',sans-serif }
+.mono{font-family:'JetBrains Mono',monospace}
+.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.08)}
+.primary{color:#7dd3fc}
+.primary-bg{background:#7dd3fc;color:#020617}
+.card-hover:hover{background:rgba(125,211,252,.08);transform:translateY(-2px);transition:.3s}
+</style>
 </head>
-<body>
-  <h2>Register</h2>
-  <input id="regEmail" type="email" placeholder="Email"><br>
-  <input id="regPassword" type="password" placeholder="Password"><br>
-  <button onclick="register()">Register</button>
 
-  <h2>Login</h2>
-  <input id="logEmail" type="email" placeholder="Email"><br>
-  <input id="logPassword" type="password" placeholder="Password"><br>
-  <button onclick="login()">Login</button>
+<body class="antialiased">
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+<nav class="fixed w-full z-40 flex justify-between items-center px-8 py-5 glass">
+  <div class="mono uppercase tracking-widest">M. Sharma // Cyber Academy</div>
+  <button id="cartBtn" class="mono text-sm border border-white/20 px-4 py-2">Cart</button>
+</nav>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBhkNdmScAvA03x37_4GfD3nPgFdhSpdlw",
-      authDomain: "ecommerce-auth-dc760.firebaseapp.com",
-      projectId: "ecommerce-auth-dc760",
-      storageBucket: "ecommerce-auth-dc760.firebasestorage.app",
-      messagingSenderId: "65994466308",
-      appId: "1:65994466308:web:3a2f0ed9727a6e11244151",
-      measurementId: "G-R3GG0CCR8L"
-    };
+<section class="min-h-screen pt-32 px-6 md:px-24">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Digital Store</h3>
+  <div id="storeGrid" class="grid md:grid-cols-3 gap-8"></div>
+</section>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+<!-- PRODUCT MODAL -->
+<div id="productModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+  <div class="glass max-w-lg w-full mx-4 p-6 relative">
+    <button id="closeModal" class="absolute top-4 right-4">✕</button>
+    <img id="modalImage" class="w-full h-56 object-cover rounded mb-4" />
+    <h2 id="modalTitle" class="text-2xl font-bold primary"></h2>
+    <p id="modalPrice" class="mono my-2"></p>
+    <p id="modalDescription" class="opacity-70 mb-4"></p>
+    <ul id="modalFeatures" class="list-disc list-inside text-sm opacity-60"></ul>
+    <button onclick="addToCart(currentProductId)" class="primary-bg w-full py-3 mt-6 font-semibold">Add to Cart</button>
+  </div>
+</div>
 
-    window.register = function() {
-      const email = document.getElementById("regEmail").value;
-      const password = document.getElementById("regPassword").value;
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-          alert("✅ Registered: " + userCredential.user.email);
-        })
-        .catch(error => {
-          alert("❌ Error: " + error.message);
-        });
-    }
+<!-- CART -->
+<div id="cartDrawer" class="fixed top-0 right-0 w-80 h-full bg-black/90 glass hidden z-50 p-6">
+  <h3 class="text-xl font-bold primary mb-4">Your Cart</h3>
+  <div id="cartItems" class="space-y-4"></div>
+  <div class="mt-6 border-t border-white/10 pt-4">
+    <p class="mono mb-4">Total: ₹<span id="cartTotal">0</span></p>
+  </div>
+  <button id="closeCart" class="absolute top-4 right-4">✕</button>
+</div>
 
-    window.login = function() {
-      const email = document.getElementById("logEmail").value;
-      const password = document.getElementById("logPassword").value;
-      signInWithEmailAndPassword(auth, email, password)
-        .then(userCredential => {
-          alert("✅ Logged in: " + userCredential.user.email);
-        })
-        .catch(error => {
-          alert("❌ Error: " + error.message);
-        });
-    }
-  </script>
+<script type="module">
+/* FIREBASE */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBsnsYzyQF-ufzTYmWpPUAPSKwhQrDW-0U",
+  authDomain: "ideas-hub-250c8.firebaseapp.com",
+  projectId: "ideas-hub-250c8",
+  storageBucket: "ideas-hub-250c8.firebasestorage.app",
+  messagingSenderId: "878672371620",
+  appId: "1:878672371620:web:d7c771a2f75f4f573d6b31"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* STATE */
+const productsMap = {};
+let currentProductId = null;
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* DOM */
+const storeGrid = document.getElementById("storeGrid");
+const modal = document.getElementById("productModal");
+const cartDrawer = document.getElementById("cartDrawer");
+
+/* LOAD PRODUCTS */
+async function loadProducts() {
+  const snap = await getDocs(collection(db,"products"));
+  snap.forEach(d=>{
+    const p={id:d.id,...d.data()};
+    productsMap[p.id]=p;
+    storeGrid.innerHTML+=`
+      <div class="glass p-6 card-hover">
+        <img src="${p.imageUrl}" class="w-full h-48 object-cover rounded mb-4">
+        <h4 class="primary font-bold">${p.title}</h4>
+        <p class="opacity-60 text-sm mt-2">${p.description ?? ""}</p>
+        <div class="flex justify-between mt-4">
+          <span class="mono">₹${p.price}</span>
+          <button onclick="openProductModal('${p.id}')" class="primary-bg px-4 py-2">View</button>
+        </div>
+      </div>`;
+  });
+}
+loadProducts();
+
+/* MODAL */
+window.openProductModal=id=>{
+  const p=productsMap[id];
+  currentProductId=id;
+  modal.classList.remove("hidden");modal.classList.add("flex");
+  modalImage.src=p.imageUrl;
+  modalTitle.textContent=p.title;
+  modalPrice.textContent=`₹${p.price}`;
+  modalDescription.textContent=p.description ?? "";
+  modalFeatures.innerHTML="";
+  (p.features||[]).forEach(f=>modalFeatures.innerHTML+=`<li>${f}</li>`);
+};
+closeModal.onclick=()=>modal.classList.add("hidden");
+
+/* CART */
+cartBtn.onclick=()=>{renderCart();cartDrawer.classList.remove("hidden")};
+closeCart.onclick=()=>cartDrawer.classList.add("hidden");
+
+window.addToCart=id=>{
+  const p=productsMap[id];
+  const i=cart.find(x=>x.productId===id);
+  i?i.qty++:cart.push({productId:id,title:p.title,price:p.price,imageUrl:p.imageUrl,qty:1});
+  localStorage.setItem("cart",JSON.stringify(cart));
+  renderCart();
+};
+
+window.removeFromCart=id=>{
+  cart=cart.filter(i=>i.productId!==id);
+  localStorage.setItem("cart",JSON.stringify(cart));
+  renderCart();
+};
+
+function renderCart(){
+  cartItems.innerHTML="";let total=0;
+  cart.forEach(i=>{
+    total+=i.price*i.qty;
+    cartItems.innerHTML+=`
+      <div class="flex gap-3 items-center">
+        <img src="${i.imageUrl}" class="w-12 h-12 rounded">
+        <div class="flex-1">
+          <p>${i.title}</p>
+          <p class="text-xs opacity-60">₹${i.price} × ${i.qty}</p>
+        </div>
+        <button onclick="removeFromCart('${i.productId}')" class="text-red-400">✕</button>
+      </div>`;
+  });
+  cartTotal.textContent=total;
+}
+</script>
+
 </body>
 </html>
