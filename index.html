@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,187 +10,261 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
 <style>
-body{
+body {
   background:#07090d;
   color:#e5e7eb;
   font-family:'Space Grotesk',sans-serif;
 }
-.mono{font-family:'JetBrains Mono',monospace}
-.glass{
-  background:rgba(255,255,255,.05);
-  backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,.08)
+.mono { font-family:'JetBrains Mono',monospace }
+.glass {
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
 }
-.primary{color:#7dd3fc}
-.primary-bg{background:#7dd3fc;color:#020617}
-.card:hover{background:rgba(125,211,252,.08);transform:translateY(-3px)}
-.hidden-section{display:none}
+.primary { color:#7dd3fc }
+.primary-bg { background:#7dd3fc; color:#020617 }
+.card-hover:hover {
+  background:rgba(125,211,252,.1);
+  transform:translateY(-3px);
+  transition:.3s;
+}
+.hamburger span {
+  display:block;width:25px;height:3px;margin:5px;background:#7dd3fc;
+}
+.menu {
+  display:none;position:fixed;top:0;left:0;height:100%;width:250px;
+  background:#000;padding:2rem;z-index:60;flex-direction:column;gap:1.5rem;
+}
+.menu.show { display:flex }
+
+button { cursor:pointer; }
 </style>
 </head>
 
-<body class="antialiased">
+<body>
 
 <!-- NAV -->
-<nav class="fixed top-0 w-full z-50 glass flex justify-between items-center px-8 py-4">
+<nav class="fixed w-full z-50 flex justify-between items-center px-8 py-5 glass">
+  <div class="hamburger md:hidden" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
   <div class="mono uppercase tracking-widest">M. Sharma // Cyber Academy</div>
-  <div class="flex gap-6 text-xs uppercase tracking-widest">
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('courses')">Courses</button>
-    <button onclick="showPage('books')">Books</button>
-    <button onclick="showPage('tools')">Tools</button>
-    <button onclick="showPage('ctf')">CTF</button>
-    <button onclick="showPage('learning')">Learning</button>
-    <button onclick="openAuth()">Login</button>
+  <div class="hidden md:flex gap-6 text-xs uppercase tracking-widest opacity-70">
+    <a href="#courses">Courses</a>
+    <a href="#store">Books</a>
+    <a href="#tools">Tools</a>
+    <a href="#ctf">CTF</a>
+    <a href="#learning">Learning</a>
+    <a href="#loginSection">Login</a>
+    <a href="#contact">Contact</a>
   </div>
 </nav>
 
-<main class="pt-28">
+<div class="menu" id="mobileMenu">
+  <a href="#courses">Courses</a>
+  <a href="#store">Books</a>
+  <a href="#tools">Tools</a>
+  <a href="#ctf">CTF</a>
+  <a href="#learning">Learning</a>
+  <a href="#loginSection">Login</a>
+  <a href="#contact">Contact</a>
+</div>
 
-<!-- HOME -->
-<section id="home" class="page px-6 md:px-24">
-  <div class="text-center py-24">
+<!-- HERO -->
+<section class="min-h-screen flex items-center justify-center pt-24">
+  <div class="text-center max-w-4xl px-6">
     <h1 class="text-5xl md:text-7xl font-bold mb-6">
-      Learn Cybersecurity <span class="primary">Ethically</span>
+      Learn Cybersecurity<br><span class="primary">The Ethical Way</span>
     </h1>
-    <p class="opacity-70 max-w-2xl mx-auto">
-      Real-world cybersecurity education, labs, CTFs and books built for defenders.
+    <p class="opacity-70 mb-10">
+      Practical cybersecurity education, defensive research and real-world skills.
     </p>
+    <div class="flex justify-center gap-4">
+      <a href="#courses" class="primary-bg px-8 py-4 font-semibold">Explore Courses</a>
+      <a href="#store" class="border border-white/20 px-8 py-4">Books Store</a>
+    </div>
   </div>
 </section>
 
 <!-- COURSES -->
-<section id="courses" class="page hidden-section px-6 md:px-24 py-16">
-  <h2 class="text-4xl font-bold mb-10 uppercase">Courses</h2>
-  <div id="coursesList" class="grid md:grid-cols-3 gap-8"></div>
+<section id="courses" class="py-24 px-6 md:px-24">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Courses</h3>
+  <div id="coursesGrid" class="grid md:grid-cols-3 gap-8"></div>
 </section>
 
 <!-- BOOKS -->
-<section id="books" class="page hidden-section px-6 md:px-24 py-16">
-  <h2 class="text-4xl font-bold mb-10 uppercase">Books (₹49)</h2>
-  <div id="booksList" class="grid md:grid-cols-3 gap-8"></div>
+<section id="store" class="py-24 px-6 md:px-24 bg-white/5">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Books Store</h3>
+  <div id="booksGrid" class="grid md:grid-cols-3 gap-8"></div>
 </section>
 
 <!-- TOOLS -->
-<section id="tools" class="page hidden-section px-6 md:px-24 py-16">
-  <h2 class="text-4xl font-bold mb-10 uppercase">Security Tools</h2>
-  <div id="toolsList" class="grid md:grid-cols-2 gap-8"></div>
+<section id="tools" class="py-24 px-6 md:px-24">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Tools</h3>
+  <div id="toolsGrid" class="grid md:grid-cols-3 gap-8"></div>
 </section>
 
-<!-- CTF -->
-<section id="ctf" class="page hidden-section px-6 md:px-24 py-16">
-  <h2 class="text-4xl font-bold mb-10 uppercase">CTF & Daily Hunters</h2>
-  <div id="ctfList" class="grid md:grid-cols-2 gap-8"></div>
+<!-- CTF & Challenges -->
+<section id="ctf" class="py-24 px-6 md:px-24 bg-white/5">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">CTF & Challenges</h3>
+  <div id="ctfGrid" class="grid md:grid-cols-3 gap-8"></div>
 </section>
 
-<!-- LEARNING -->
-<section id="learning" class="page hidden-section px-6 md:px-24 py-16">
-  <h2 class="text-4xl font-bold mb-6 uppercase">Learning Programs</h2>
-  <p class="opacity-70 mb-8">
-    Here you will get latest free courses and programs news by other community & company
-  </p>
-  <div id="learningList" class="grid md:grid-cols-2 gap-8"></div>
+<!-- LEARNING PROGRAMS -->
+<section id="learning" class="py-24 px-6 md:px-24">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Learning Programs</h3>
+  <div id="learningGrid" class="grid md:grid-cols-3 gap-8"></div>
 </section>
 
-</main>
+<!-- LOGIN / SIGNUP -->
+<section id="loginSection" class="py-24 px-6 md:px-24 bg-white/5">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Login / Sign Up</h3>
+  <div class="max-w-md mx-auto glass p-8">
+    <input type="email" id="email" placeholder="Email" class="w-full mb-4 p-3 rounded bg-black/20 text-white" />
+    <input type="password" id="password" placeholder="Password" class="w-full mb-4 p-3 rounded bg-black/20 text-white" />
+    <div class="flex justify-between">
+      <button id="loginBtn" class="primary-bg px-6 py-2 rounded">Login</button>
+      <button id="signupBtn" class="border border-white/20 px-6 py-2 rounded">Sign Up</button>
+      <button id="logoutBtn" class="border border-red-500 px-6 py-2 rounded hidden">Logout</button>
+    </div>
+    <p id="authMessage" class="mt-4 text-xs opacity-60"></p>
+  </div>
+</section>
 
-<!-- AUTH PANEL -->
-<div id="authPanel" class="fixed top-0 right-0 h-full w-80 glass hidden z-50 p-6">
-  <h3 class="text-xl font-bold mb-4">Login / Signup</h3>
-  <input id="email" type="email" placeholder="Email" class="w-full mb-3 p-2 bg-black/40 border border-white/10">
-  <input id="password" type="password" placeholder="Password" class="w-full mb-4 p-2 bg-black/40 border border-white/10">
-  <button onclick="login()" class="primary-bg w-full py-2 mb-2">Login</button>
-  <button onclick="signup()" class="border w-full py-2">Signup</button>
-  <button onclick="closeAuth()" class="text-xs opacity-60 mt-4">Close</button>
-</div>
+<!-- FOOTER -->
+<footer id="contact" class="py-24 px-6 bg-black/60 text-center">
+  <p class="mono opacity-60">support@msharma.dev</p>
+  <p class="text-xs opacity-40 mt-4">© 2025 Cyber Academy</p>
+</footer>
 
-<!-- FIREBASE -->
+<!-- FIREBASE + UI SCRIPT -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBsnsYzyQF-ufzTYmWpPUAPSKwhQrDW-0U",
   authDomain: "ideas-hub-250c8.firebaseapp.com",
   projectId: "ideas-hub-250c8",
+  storageBucket: "ideas-hub-250c8.firebasestorage.app",
+  messagingSenderId: "878672371620",
+  appId: "1:878672371620:web:d7c771a2f75f4f573d6b31"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-/* ---------- AUTH ---------- */
-window.login = async()=>{
-  await signInWithEmailAndPassword(auth,email.value,password.value);
-  closeAuth();
-};
-window.signup = async()=>{
-  await createUserWithEmailAndPassword(auth,email.value,password.value);
-  closeAuth();
-};
+// DOM Elements
+const coursesGrid = document.getElementById("coursesGrid");
+const booksGrid = document.getElementById("booksGrid");
+const toolsGrid = document.getElementById("toolsGrid");
+const ctfGrid = document.getElementById("ctfGrid");
+const learningGrid = document.getElementById("learningGrid");
 
-/* ---------- NAV ---------- */
-window.showPage = (id)=>{
-  document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden-section'));
-  document.getElementById(id).classList.remove('hidden-section');
-};
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+const signupBtn = document.getElementById("signupBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const authMessage = document.getElementById("authMessage");
 
-/* ---------- AUTH UI ---------- */
-window.openAuth=()=>authPanel.classList.remove('hidden');
-window.closeAuth=()=>authPanel.classList.add('hidden');
+// Mock Data (Replace with Firestore collections in production)
+const coursesData = [
+  { title:"Ethical Hacking Essentials", description:"Intro to web & network security.", imageUrl:"https://source.unsplash.com/400x300/?cybersecurity", status:"Coming Soon" },
+  { title:"Web Penetration Testing", description:"Learn XSS, SQLi, and safe testing.", imageUrl:"https://source.unsplash.com/400x300/?hacker", status:"Coming Soon" },
+  { title:"Malware Analysis", description:"Defensive malware techniques.", imageUrl:"https://source.unsplash.com/400x300/?malware", status:"Coming Soon" },
+  { title:"Shell Scripting & Bash", description:"Automate tasks in Linux.", imageUrl:"https://source.unsplash.com/400x300/?linux", status:"Coming Soon" },
+  { title:"Networking Fundamentals", description:"TCP/IP, DNS, routing basics.", imageUrl:"https://source.unsplash.com/400x300/?network", status:"Coming Soon" },
+  { title:"Machine Learning Security", description:"AI & security applications.", imageUrl:"https://source.unsplash.com/400x300/?machinelearning", status:"Coming Soon" }
+];
 
-/* ---------- SEED DATABASE (RUN ONCE) ---------- */
-async function seed(){
-  const courses=[ "Ethical Hacking Essentials","Web Penetration Testing","Malware Analysis","SQL Injection","Scanning & Recon","Shell Scripting","Network Fundamentals","Machine Learning","C Language","Python","Bash"];
-  for(const c of courses){
-    await addDoc(collection(db,"courses"),{
-      title:c,
-      description:"Professional cybersecurity course. Coming soon.",
-      thumbnail:"https://source.unsplash.com/400x300/?cybersecurity"
-    });
-  }
+const booksData = [
+  { title:"Kali Linux Cheatsheet", description:"Commands & tools reference.", price:49, imageUrl:"https://source.unsplash.com/400x300/?kali-linux" },
+  { title:"The Hacker's Playbook", description:"Methodology & mindset.", price:49, imageUrl:"https://source.unsplash.com/400x300/?hacking" },
+  { title:"Bug Hunting Checklist", description:"Steps to find vulnerabilities.", price:49, imageUrl:"https://source.unsplash.com/400x300/?bug" },
+  { title:"Hacking: Art of Info Gathering", description:"Recon & OSINT techniques.", price:49, imageUrl:"https://source.unsplash.com/400x300/?technology" }
+];
 
-  const books=["Kali Linux Cheatsheet","The Hacker’s Playbook","Bug Hunting Checklist","Hacking: Art of Information Gathering"];
-  for(const b of books){
-    await addDoc(collection(db,"books"),{
-      title:b,
-      description:"Cybersecurity book for professionals.",
-      price:49,
-      thumbnail:"https://source.unsplash.com/400x300/?hacking"
-    });
-  }
+const toolsData = [
+  { title:"Keylogger", description:"For lab use only.", imageUrl:"https://source.unsplash.com/400x300/?keylogger" },
+  { title:"Spyware", description:"Defensive research.", imageUrl:"https://source.unsplash.com/400x300/?spyware" },
+  { title:"Malware", description:"Understand malware behavior.", imageUrl:"https://source.unsplash.com/400x300/?malware" },
+  { title:"RAT v12", description:"Remote admin tool lab.", imageUrl:"https://source.unsplash.com/400x300/?rat" }
+];
 
-  const tools=["Keylogger","Spyware","Malware","RAT v12"];
-  for(const t of tools){
-    await addDoc(collection(db,"tools"),{
-      title:t,
-      description:"Educational lab tool for security research."
-    });
-  }
+const ctfData = [
+  { title:"CTF Challenges", description:"Web, crypto, reverse.", imageUrl:"https://source.unsplash.com/400x300/?ctf" },
+  { title:"Daily Hunters", description:"Daily security puzzles.", imageUrl:"https://source.unsplash.com/400x300/?puzzle" }
+];
 
-  await addDoc(collection(db,"ctf"),{title:"Daily Hunters",description:"Updated very soon"});
-  await addDoc(collection(db,"learning"),{title:"Community Feed"});
-}
-// seed(); // ← RUN ONLY ONCE THEN COMMENT
+const learningData = [
+  { title:"Latest Free Courses", description:"Community & company programs.", imageUrl:"https://source.unsplash.com/400x300/?learning" }
+];
 
-/* ---------- LOAD DATA ---------- */
-async function load(col,id){
-  const snap=await getDocs(collection(db,col));
-  snap.forEach(d=>{
-    document.getElementById(id).innerHTML+=`
-      <div class="glass p-6 card">
-        <h4 class="font-bold primary">${d.data().title}</h4>
-        <p class="text-sm opacity-60">${d.data().description||""}</p>
-      </div>`;
+// Functions to render cards
+function renderCard(data, grid, type){
+  grid.innerHTML="";
+  data.forEach(item=>{
+    let html=`
+    <div class="glass p-6 card-hover">
+      <img src="${item.imageUrl}" class="w-full h-48 object-cover rounded mb-4" />
+      <h4 class="text-xl font-bold primary mb-2">${item.title}</h4>
+      <p class="text-sm opacity-60 mb-4">${item.description}</p>
+      ${type==='book'?`<div class="flex justify-between items-center"><span class="text-lg font-bold primary">₹${item.price}</span><button class="px-3 py-1 bg-primary text-black rounded text-sm" onclick="buyBook('${item.title}')">Buy</button></div>`:""}
+      ${type==='course'?`<button class="px-3 py-1 bg-primary text-black rounded text-sm" onclick="enrollCourse('${item.title}')">Enroll</button>`:""}
+    </div>`;
+    grid.innerHTML+=html;
   });
 }
 
-load("courses","coursesList");
-load("books","booksList");
-load("tools","toolsList");
-load("ctf","ctfList");
-load("learning","learningList");
+// Simulate buy / enroll
+window.buyBook=(title)=>alert(`Pay ₹49 via UPI to buy "${title}"`);
+window.enrollCourse=(title)=>alert(`Enrolled in "${title}" (Coming Soon)`);
 
+// Render all sections
+renderCard(coursesData, coursesGrid, 'course');
+renderCard(booksData, booksGrid, 'book');
+renderCard(toolsData, toolsGrid, 'tool');
+renderCard(ctfData, ctfGrid, 'ctf');
+renderCard(learningData, learningGrid, 'learning');
+
+// Firebase Auth
+signupBtn.onclick=async()=>{
+  try{
+    const user=await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
+    authMessage.textContent="Sign up successful!";
+    logoutBtn.classList.remove("hidden");
+  }catch(e){authMessage.textContent=e.message;}
+};
+loginBtn.onclick=async()=>{
+  try{
+    const user=await signInWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
+    authMessage.textContent="Login successful!";
+    logoutBtn.classList.remove("hidden");
+  }catch(e){authMessage.textContent=e.message;}
+};
+logoutBtn.onclick=async()=>{
+  await signOut(auth);
+  authMessage.textContent="Logged out!";
+  logoutBtn.classList.add("hidden");
+};
+
+// mobile menu
+const hamburger = document.getElementById("hamburger");
+const mobileMenu = document.getElementById("mobileMenu");
+hamburger.onclick = ()=>mobileMenu.classList.toggle("show");
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.onclick=e=>{
+    e.preventDefault();
+    document.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+    mobileMenu.classList.remove("show");
+  }
+});
 </script>
 
 </body>
