@@ -1,143 +1,150 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>M. Sharma | Cyber Academy</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>M. Sharma | Cyber Academy</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
-    <style>
-        :root { --primary: #7dd3fc; }
-        body { background: #07090d; color: #e5e7eb; font-family: 'Space Grotesk', sans-serif; scroll-behavior: smooth; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .primary { color: var(--primary); }
-        .primary-bg { background: var(--primary); color: #020617; transition: 0.3s; }
-        .primary-bg:hover { background: #38bdf8; transform: scale(1.05); }
-        .card-hover { transition: 0.3s ease; border: 1px solid transparent; }
-        .card-hover:hover { background: rgba(125, 211, 252, 0.05); transform: translateY(-5px); border-color: rgba(125, 211, 252, 0.3); }
-        
-        .hamburger span { display: block; width: 25px; height: 2px; margin: 6px; background: var(--primary); transition: 0.4s; }
-        .menu { display: none; position: fixed; top: 0; left: 0; height: 100%; width: 280px; background: #0a0c10; padding: 2rem; z-index: 60; flex-direction: column; gap: 1.5rem; border-right: 1px solid rgba(255,255,255,0.1); }
-        .menu.show { display: flex; }
-        
-        input { outline: none; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1) !important; }
-        input:focus { border-color: var(--primary) !important; box-shadow: 0 0 10px rgba(125, 211, 252, 0.2); }
-        .hidden { display: none; }
-    </style>
+<style>
+body {
+  background:#07090d;
+  color:#e5e7eb;
+  font-family:'Space Grotesk',sans-serif;
+}
+.mono { font-family:'JetBrains Mono',monospace }
+.glass {
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+}
+.primary { color:#7dd3fc }
+.primary-bg { background:#7dd3fc; color:#020617 }
+.card-hover:hover {
+  background:rgba(125,211,252,.1);
+  transform:translateY(-3px);
+  transition:.3s;
+}
+.hamburger span {
+  display:block;width:25px;height:3px;margin:5px;background:#7dd3fc;
+}
+.menu {
+  display:none;position:fixed;top:0;left:0;height:100%;width:250px;
+  background:#000;padding:2rem;z-index:60;flex-direction:column;gap:1.5rem;
+}
+.menu.show { display:flex }
+
+button { cursor:pointer; }
+</style>
 </head>
 
 <body>
 
-<nav class="fixed w-full z-50 flex justify-between items-center px-6 md:px-12 py-4 glass">
-    <div class="flex items-center gap-4">
-        <div class="hamburger md:hidden" id="hamburger">
-            <span></span><span></span><span></span>
-        </div>
-        <div class="mono uppercase tracking-tighter font-bold text-lg">
-            <span class="primary">M. Sharma</span> <span class="opacity-50">//</span> ACADEMY
-        </div>
-    </div>
-    <div class="hidden md:flex gap-8 text-[10px] uppercase tracking-[0.2em] font-bold opacity-80">
-        <a href="#courses" class="hover:text-sky-300 transition">Courses</a>
-        <a href="#store" class="hover:text-sky-300 transition">Books</a>
-        <a href="#tools" class="hover:text-sky-300 transition">Tools</a>
-        <a href="#loginSection" id="navLoginLink" class="hover:text-sky-300 transition">Login</a>
-        <span id="userDisplay" class="primary hidden"></span>
-    </div>
-</nav>
-
-<div class="menu shadow-2xl" id="mobileMenu">
-    <div class="text-xl font-bold mb-8 primary">NAVIGATION</div>
+<!-- NAV -->
+<nav class="fixed w-full z-50 flex justify-between items-center px-8 py-5 glass">
+  <div class="hamburger md:hidden" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="mono uppercase tracking-widest">M. Sharma // Cyber Academy</div>
+  <div class="hidden md:flex gap-6 text-xs uppercase tracking-widest opacity-70">
     <a href="#courses">Courses</a>
     <a href="#store">Books</a>
     <a href="#tools">Tools</a>
-    <a href="#loginSection">Login/Profile</a>
+    <a href="#ctf">CTF</a>
+    <a href="#learning">Learning</a>
+    <a href="#loginSection">Login</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="menu" id="mobileMenu">
+  <a href="#courses">Courses</a>
+  <a href="#store">Books</a>
+  <a href="#tools">Tools</a>
+  <a href="#ctf">CTF</a>
+  <a href="#learning">Learning</a>
+  <a href="#loginSection">Login</a>
+  <a href="#contact">Contact</a>
 </div>
 
-<section class="min-h-screen flex items-center justify-center relative overflow-hidden">
-    <div class="absolute w-96 h-96 bg-sky-500/10 rounded-full blur-[120px] -top-10 -left-10"></div>
-    <div class="text-center max-w-4xl px-6 relative z-10">
-        <div class="inline-block px-4 py-1 border border-sky-500/30 rounded-full text-xs mono mb-6 opacity-80">
-            SECURE YOUR FUTURE <span class="primary">_V2.0</span>
-        </div>
-        <h1 class="text-6xl md:text-8xl font-bold mb-8 tracking-tighter">
-            Master the <span class="primary">Cyber</span> Realm.
-        </h1>
-        <p class="opacity-60 text-lg mb-10 max-w-2xl mx-auto">
-            Practical labs, ethical hacking resources, and advanced defensive research curated by experts.
-        </p>
-        <div class="flex flex-col md:flex-row justify-center gap-5">
-            <a href="#courses" class="primary-bg px-10 py-4 font-bold rounded-sm">Get Started</a>
-            <a href="#store" class="border border-white/10 hover:bg-white/5 px-10 py-4 rounded-sm transition">Resource Store</a>
-        </div>
+<!-- HERO -->
+<section class="min-h-screen flex items-center justify-center pt-24">
+  <div class="text-center max-w-4xl px-6">
+    <h1 class="text-5xl md:text-7xl font-bold mb-6">
+      Learn Cybersecurity<br><span class="primary">The Ethical Way</span>
+    </h1>
+    <p class="opacity-70 mb-10">
+      Practical cybersecurity education, defensive research and real-world skills.
+    </p>
+    <div class="flex justify-center gap-4">
+      <a href="#courses" class="primary-bg px-8 py-4 font-semibold">Explore Courses</a>
+      <a href="#store" class="border border-white/20 px-8 py-4">Books Store</a>
     </div>
+  </div>
 </section>
 
+<!-- COURSES -->
 <section id="courses" class="py-24 px-6 md:px-24">
-    <div class="flex items-center gap-4 mb-12">
-        <h3 class="text-3xl font-bold uppercase tracking-widest">Training <span class="primary">Modules</span></h3>
-        <div class="h-[1px] bg-white/10 flex-grow"></div>
-    </div>
-    <div id="coursesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Courses</h3>
+  <div id="coursesGrid" class="grid md:grid-cols-3 gap-8"></div>
 </section>
 
-<section id="store" class="py-24 px-6 md:px-24 bg-white/[0.02]">
-    <div class="flex items-center gap-4 mb-12">
-        <h3 class="text-3xl font-bold uppercase tracking-widest">Knowledge <span class="primary">Base</span></h3>
-        <div class="h-[1px] bg-white/10 flex-grow"></div>
-    </div>
-    <div id="booksGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+<!-- BOOKS -->
+<section id="store" class="py-24 px-6 md:px-24 bg-white/5">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Books Store</h3>
+  <div id="booksGrid" class="grid md:grid-cols-3 gap-8"></div>
 </section>
 
+<!-- TOOLS -->
 <section id="tools" class="py-24 px-6 md:px-24">
-    <h3 class="text-3xl font-bold mb-12 uppercase text-center tracking-widest">Developer <span class="primary">Toolkit</span></h3>
-    <div id="toolsGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Tools</h3>
+  <div id="toolsGrid" class="grid md:grid-cols-3 gap-8"></div>
 </section>
 
-<section id="loginSection" class="py-32 px-6">
-    <div class="max-w-md mx-auto glass p-10 rounded-2xl relative">
-        <div id="authForm">
-            <h3 class="text-2xl font-bold mb-2 uppercase text-center" id="authTitle">Welcome Back</h3>
-            <p class="text-center text-sm opacity-50 mb-8">Access your academy dashboard</p>
-            
-            <label class="block text-xs uppercase mono mb-2 opacity-60">Email Address</label>
-            <input type="email" id="email" class="w-full mb-5 p-4 rounded-lg bg-white/5 text-white" placeholder="admin@academy.com" />
-            
-            <label class="block text-xs uppercase mono mb-2 opacity-60">Password</label>
-            <input type="password" id="password" class="w-full mb-8 p-4 rounded-lg bg-white/5 text-white" placeholder="••••••••" />
-            
-            <div class="grid grid-cols-2 gap-4">
-                <button id="loginBtn" class="primary-bg py-3 font-bold rounded-lg text-sm">LOGIN</button>
-                <button id="signupBtn" class="border border-white/10 hover:bg-white/5 py-3 rounded-lg text-sm font-bold">SIGN UP</button>
-            </div>
-        </div>
+<!-- CTF & Challenges -->
+<section id="ctf" class="py-24 px-6 md:px-24 bg-white/5">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">CTF & Challenges</h3>
+  <div id="ctfGrid" class="grid md:grid-cols-3 gap-8"></div>
+</section>
 
-        <div id="profileState" class="hidden text-center">
-            <div class="w-20 h-20 bg-sky-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-sky-500/50">
-                <span class="text-3xl">👤</span>
-            </div>
-            <h3 class="text-xl font-bold mb-1" id="userEmailDisplay">User@email.com</h3>
-            <p class="text-xs primary mb-6 mono">Rank: Student Elite</p>
-            <button id="logoutBtn" class="w-full border border-red-500/30 text-red-400 hover:bg-red-500/10 py-3 rounded-lg font-bold transition">LOGOUT SESSION</button>
-        </div>
-        
-        <p id="authMessage" class="mt-6 text-center text-xs font-bold uppercase tracking-wider text-red-400"></p>
+<!-- LEARNING PROGRAMS -->
+<section id="learning" class="py-24 px-6 md:px-24">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Learning Programs</h3>
+  <div id="learningGrid" class="grid md:grid-cols-3 gap-8"></div>
+</section>
+
+<!-- LOGIN / SIGNUP -->
+<section id="loginSection" class="py-24 px-6 md:px-24 bg-white/5">
+  <h3 class="text-4xl font-bold mb-14 text-center uppercase">Login / Sign Up</h3>
+  <div class="max-w-md mx-auto glass p-8">
+    <input type="email" id="email" placeholder="Email" class="w-full mb-4 p-3 rounded bg-black/20 text-white" />
+    <input type="password" id="password" placeholder="Password" class="w-full mb-4 p-3 rounded bg-black/20 text-white" />
+    <div class="flex justify-between">
+      <button id="loginBtn" class="primary-bg px-6 py-2 rounded">Login</button>
+      <button id="signupBtn" class="border border-white/20 px-6 py-2 rounded">Sign Up</button>
+      <button id="logoutBtn" class="border border-red-500 px-6 py-2 rounded hidden">Logout</button>
     </div>
+    <p id="authMessage" class="mt-4 text-xs opacity-60"></p>
+  </div>
 </section>
 
-<footer class="py-12 border-t border-white/5 text-center">
-    <p class="mono opacity-40 text-sm italic">"The quieter you become, the more you are able to hear."</p>
-    <p class="text-[10px] opacity-20 mt-8 uppercase tracking-[0.5em]">© 2025 Sharma Cyber Academy</p>
+<!-- FOOTER -->
+<footer id="contact" class="py-24 px-6 bg-black/60 text-center">
+  <p class="mono opacity-60">support@msharma.dev</p>
+  <p class="text-xs opacity-40 mt-4">© 2025 Cyber Academy</p>
 </footer>
 
+<!-- FIREBASE + UI SCRIPT -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-// FIREBASE CONFIG
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBsnsYzyQF-ufzTYmWpPUAPSKwhQrDW-0U",
   authDomain: "ideas-hub-250c8.firebaseapp.com",
@@ -147,117 +154,116 @@ const firebaseConfig = {
   appId: "1:878672371620:web:d7c771a2f75f4f573d6b31"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 const auth = getAuth(app);
 
-// ELEMENTS
-const authForm = document.getElementById("authForm");
-const profileState = document.getElementById("profileState");
-const userEmailDisplay = document.getElementById("userEmailDisplay");
-const navLoginLink = document.getElementById("navLoginLink");
-const userDisplay = document.getElementById("userDisplay");
+// DOM Elements
+const coursesGrid = document.getElementById("coursesGrid");
+const booksGrid = document.getElementById("booksGrid");
+const toolsGrid = document.getElementById("toolsGrid");
+const ctfGrid = document.getElementById("ctfGrid");
+const learningGrid = document.getElementById("learningGrid");
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+const signupBtn = document.getElementById("signupBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 const authMessage = document.getElementById("authMessage");
 
-// AUTH STATE LISTENER (The most important part)
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in
-        authForm.classList.add("hidden");
-        profileState.classList.remove("hidden");
-        userEmailDisplay.textContent = user.email;
-        userDisplay.textContent = user.email.split('@')[0];
-        userDisplay.classList.remove("hidden");
-        navLoginLink.classList.add("hidden");
-    } else {
-        // User is signed out
-        authForm.classList.remove("hidden");
-        profileState.classList.add("hidden");
-        userDisplay.classList.add("hidden");
-        navLoginLink.classList.remove("hidden");
-    }
-});
-
-// LOGIN LOGIC
-document.getElementById("loginBtn").onclick = async () => {
-    const email = document.getElementById("email").value;
-    const pass = document.getElementById("password").value;
-    if(!email || !pass) { authMessage.textContent = "Fill all fields"; return; }
-    
-    try {
-        await signInWithEmailAndPassword(auth, email, pass);
-        authMessage.style.color = "#7dd3fc";
-        authMessage.textContent = "Session Verified.";
-    } catch (e) {
-        authMessage.style.color = "#f87171";
-        authMessage.textContent = e.code.replace('auth/', '');
-    }
-};
-
-// SIGNUP LOGIC
-document.getElementById("signupBtn").onclick = async () => {
-    const email = document.getElementById("email").value;
-    const pass = document.getElementById("password").value;
-    if(pass.length < 6) { authMessage.textContent = "Pass must be 6+ chars"; return; }
-
-    try {
-        await createUserWithEmailAndPassword(auth, email, pass);
-        authMessage.style.color = "#7dd3fc";
-        authMessage.textContent = "Account Created.";
-    } catch (e) {
-        authMessage.style.color = "#f87171";
-        authMessage.textContent = e.code.replace('auth/', '');
-    }
-};
-
-// LOGOUT
-document.getElementById("logoutBtn").onclick = () => signOut(auth);
-
-// CONTENT RENDERING
-const courses = [
-    { t: "Ethical Hacking", d: "Zero to Hero: Web, Network, & WiFi hacking.", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400" },
-    { t: "Bug Bounty", d: "Finding vulnerabilities in real-world apps.", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=400" },
-    { t: "Network Security", d: "Hardening infrastructures and firewalls.", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&w=400" }
+// Mock Data (Replace with Firestore collections in production)
+const coursesData = [
+  { title:"Ethical Hacking Essentials", description:"Intro to web & network security.", imageUrl:"https://source.unsplash.com/400x300/?cybersecurity", status:"Coming Soon" },
+  { title:"Web Penetration Testing", description:"Learn XSS, SQLi, and safe testing.", imageUrl:"https://source.unsplash.com/400x300/?hacker", status:"Coming Soon" },
+  { title:"Malware Analysis", description:"Defensive malware techniques.", imageUrl:"https://source.unsplash.com/400x300/?malware", status:"Coming Soon" },
+  { title:"Shell Scripting & Bash", description:"Automate tasks in Linux.", imageUrl:"https://source.unsplash.com/400x300/?linux", status:"Coming Soon" },
+  { title:"Networking Fundamentals", description:"TCP/IP, DNS, routing basics.", imageUrl:"https://source.unsplash.com/400x300/?network", status:"Coming Soon" },
+  { title:"Machine Learning Security", description:"AI & security applications.", imageUrl:"https://source.unsplash.com/400x300/?machinelearning", status:"Coming Soon" }
 ];
 
-const books = [
-    { t: "Linux Bible", p: "499", img: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=400" },
-    { t: "OSINT Masters", p: "299", img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400" }
+const booksData = [
+  { title:"Kali Linux Cheatsheet", description:"Commands & tools reference.", price:49, imageUrl:"https://source.unsplash.com/400x300/?kali-linux" },
+  { title:"The Hacker's Playbook", description:"Methodology & mindset.", price:49, imageUrl:"https://source.unsplash.com/400x300/?hacking" },
+  { title:"Bug Hunting Checklist", description:"Steps to find vulnerabilities.", price:49, imageUrl:"https://source.unsplash.com/400x300/?bug" },
+  { title:"Hacking: Art of Info Gathering", description:"Recon & OSINT techniques.", price:49, imageUrl:"https://source.unsplash.com/400x300/?technology" }
 ];
 
-function render() {
-    const cg = document.getElementById("coursesGrid");
-    courses.forEach(c => {
-        cg.innerHTML += `
-        <div class="glass p-5 rounded-xl card-hover">
-            <img src="${c.img}" class="w-full h-40 object-cover rounded-lg mb-4 opacity-80" />
-            <h4 class="text-lg font-bold primary mb-2">${c.t}</h4>
-            <p class="text-xs opacity-50 mb-6">${c.d}</p>
-            <button class="w-full py-2 border border-sky-500/20 rounded hover:bg-sky-500/10 text-xs font-bold transition">ENROLL NOW</button>
-        </div>`;
-    });
+const toolsData = [
+  { title:"Keylogger", description:"For lab use only.", imageUrl:"https://source.unsplash.com/400x300/?keylogger" },
+  { title:"Spyware", description:"Defensive research.", imageUrl:"https://source.unsplash.com/400x300/?spyware" },
+  { title:"Malware", description:"Understand malware behavior.", imageUrl:"https://source.unsplash.com/400x300/?malware" },
+  { title:"RAT v12", description:"Remote admin tool lab.", imageUrl:"https://source.unsplash.com/400x300/?rat" }
+];
 
-    const bg = document.getElementById("booksGrid");
-    books.forEach(b => {
-        bg.innerHTML += `
-        <div class="glass p-4 rounded-xl card-hover">
-            <img src="${b.img}" class="w-full h-48 object-cover rounded mb-4" />
-            <div class="flex justify-between items-center">
-                <span class="text-sm font-bold">${b.t}</span>
-                <span class="primary font-mono text-xs">₹${b.p}</span>
-            </div>
-            <button class="w-full mt-4 py-2 bg-white/5 hover:bg-white/10 rounded text-[10px] uppercase font-bold">Buy PDF</button>
-        </div>`;
-    });
+const ctfData = [
+  { title:"CTF Challenges", description:"Web, crypto, reverse.", imageUrl:"https://source.unsplash.com/400x300/?ctf" },
+  { title:"Daily Hunters", description:"Daily security puzzles.", imageUrl:"https://source.unsplash.com/400x300/?puzzle" }
+];
+
+const learningData = [
+  { title:"Latest Free Courses", description:"Community & company programs.", imageUrl:"https://source.unsplash.com/400x300/?learning" }
+];
+
+// Functions to render cards
+function renderCard(data, grid, type){
+  grid.innerHTML="";
+  data.forEach(item=>{
+    let html=`
+    <div class="glass p-6 card-hover">
+      <img src="${item.imageUrl}" class="w-full h-48 object-cover rounded mb-4" />
+      <h4 class="text-xl font-bold primary mb-2">${item.title}</h4>
+      <p class="text-sm opacity-60 mb-4">${item.description}</p>
+      ${type==='book'?`<div class="flex justify-between items-center"><span class="text-lg font-bold primary">₹${item.price}</span><button class="px-3 py-1 bg-primary text-black rounded text-sm" onclick="buyBook('${item.title}')">Buy</button></div>`:""}
+      ${type==='course'?`<button class="px-3 py-1 bg-primary text-black rounded text-sm" onclick="enrollCourse('${item.title}')">Enroll</button>`:""}
+    </div>`;
+    grid.innerHTML+=html;
+  });
 }
 
-render();
+// Simulate buy / enroll
+window.buyBook=(title)=>alert(`Pay ₹49 via UPI to buy "${title}"`);
+window.enrollCourse=(title)=>alert(`Enrolled in "${title}" (Coming Soon)`);
 
-// MOBILE MENU
-const hb = document.getElementById("hamburger");
-const mm = document.getElementById("mobileMenu");
-hb.onclick = () => mm.classList.toggle("show");
-document.querySelectorAll('.menu a').forEach(link => {
-    link.onclick = () => mm.classList.remove("show");
+// Render all sections
+renderCard(coursesData, coursesGrid, 'course');
+renderCard(booksData, booksGrid, 'book');
+renderCard(toolsData, toolsGrid, 'tool');
+renderCard(ctfData, ctfGrid, 'ctf');
+renderCard(learningData, learningGrid, 'learning');
+
+// Firebase Auth
+signupBtn.onclick=async()=>{
+  try{
+    const user=await createUserWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
+    authMessage.textContent="Sign up successful!";
+    logoutBtn.classList.remove("hidden");
+  }catch(e){authMessage.textContent=e.message;}
+};
+loginBtn.onclick=async()=>{
+  try{
+    const user=await signInWithEmailAndPassword(auth,emailInput.value,passwordInput.value);
+    authMessage.textContent="Login successful!";
+    logoutBtn.classList.remove("hidden");
+  }catch(e){authMessage.textContent=e.message;}
+};
+logoutBtn.onclick=async()=>{
+  await signOut(auth);
+  authMessage.textContent="Logged out!";
+  logoutBtn.classList.add("hidden");
+};
+
+// mobile menu
+const hamburger = document.getElementById("hamburger");
+const mobileMenu = document.getElementById("mobileMenu");
+hamburger.onclick = ()=>mobileMenu.classList.toggle("show");
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.onclick=e=>{
+    e.preventDefault();
+    document.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+    mobileMenu.classList.remove("show");
+  }
 });
 </script>
 
